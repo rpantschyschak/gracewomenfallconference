@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Styles -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+	@font-face {
+		font-family: 'Shoreline';
+		src: url('assets/Shorelines Script Bold.otf');
+	}
+	:root {
+		/* --color-accent: #2a95a0; */
+		--color-accent:  #299aa2;
+		--color-accent2: #1c5d77;
+		--color-heading: #3c3215;
+		--arrow-size: 10px;
+	}
+	* {
+		box-sizing: border-box;
+	}
+	body {
+		font-family: 'Montserrat', sans-serif;
+		margin: 0px;
+	}
+	div {
+		/* height: 100%; */
+	}
+	img {
+		height: 100%;
+	}
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.upper {
+		text-transform: uppercase;
+	}
+	.button {
+		cursor: pointer;
+		user-select: none;
+		border-radius: 4px;
+	}
+	#content-container {
+		width: 100%;
+		max-width: 1440px;
+		background-color: rgb(254,245,238);;
+		box-shadow: 0 0 20px 15px rgba(0,0,0,0.1);
+		margin: 0 auto;
+	}
+	#content-header {
+		height: 80px;
+		padding: 20px 25px;
+		background-color: white;
+	}
+	#header-logo {
+		float: left;
+		height: 100%;
+	}
+	#header-date-container {
+		float: right;
+		color: #333;
+		font-size: 17px;
+		font-weight: bold;
+		text-align: right;
+	}
+	#countdown-timer {
+		font-size: 15px;
+		color: #333;
+		font-weight: normal;
+		line-height: 23px;
+	}
+	#content-body {
+		text-align: center;
+	}
+	#title-container {
+		background-color: var(--color-accent);
+		padding: 50px 0px;
+	}
+	.title-heading {
+		color: white;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	#title {
+		font-size: 100px;
+		color: white;
+		margin: 50px 0px;
+		font-family: 'Shoreline';
+	}
+	.verse, .verse-sub{
+		color: #333;
+		background-color: white;
+		font-size: 18px;
+		display: inline-block;
+		padding: 0px 11px;
+		margin: 3px;
+	}
+	.verse {
+		font-weight: bold;
+	}
+	.verse-sub {
+		font-size: 12px;
+		font-weight: 500;
+	}
+	.content-heading {
+		font-size: 50px;
+		color: var(--color-heading);
+		margin-bottom: 20px;
+		display: inline-block;
+		line-height: normal;
+	}
+	.content-heading:after, #register:after, #topic-container:after {
+		content: "";
+		display: block;
+		margin: 0 auto;
+		width: 65%;
+		padding-top: 0px;
+		border-bottom: 4px solid var(--color-heading);
+		opacity: 0.3;
+	}
+	#info-sections {
+		display: flex;
+		margin: 50px 50px;
+		justify-content: center;
+	}
+	.info-section {
+		flex-grow: 1;
+		max-width: 325px;
+		margin: 0px 40px;
+		line-height: 28px;
+	}
+	.schedule-times {
+		text-transform: uppercase;
+		line-height: 35px;
+	}
+	#register {
+		font-size: 20px;
+		color: var(--color-accent);
+		display: inline-block;
+		font-weight: 500;
+		margin: 50px 0px;
+	}
+	#register:after {
+		border-color: var(--color-accent);
+		padding-top: 1px;
+	}
+	#topic-container {
+		padding: 50px 80px;
+	}
+	#topic-container:after {
+		width: 100%;
+		padding-top: 30px;
+	}
+	#topic-tabs {
+		display: flex;
+		align-items: stretch;
+		margin: 50px 0px 35px 0px;
+	}
+	.topic-tab {
+		flex-grow: 1;
+		text-align: center;
+		margin: 0px 20px;
+		position: relative;
+		background-color: var(--color-accent);
+		max-width: 25%;
+		padding: 18px 10px 5px 10px;
+		color: white;
+		transition: 0.5s ease all;
+		text-transform: uppercase;
+		font-size: 18px;
+	}
+	.topic-tab:first-child {
+		margin-left: 0px;
+	}
+	.topic-tab:last-child {
+		margin-right: 0px;
+	}
+	.arrow {
+		border: 2px solid white;
+		border-top: none;
+		border-left: none;
+		transform: rotate(45deg);
+		height: var(--arrow-size);
+		width: var(--arrow-size);
+		display: inline-block;
+		position: relative;
+		transition: 0.4s ease border-color;
+		top: -1px;
+		opacity: 1
+	}
+	.topic-tab-active .arrow{
+		/* border-color: rgba(255,255,255,0.3); */
+		border-color: var(--color-accent);
+		opacity: 0.6;
+	}
+	.topic-tab-active {
+		background-color: white;
+		color: var(--color-accent);
+	}
+	.topic-tab-active .topic-tab-arrow {
+		top: 100%;
+		border-top-color: var(--color-accent);
+	}
+	#topic-content {
+		height: 0px;
+		transition: 0.3s ease height;
+		overflow: hidden;
+		background-color: white;
+		box-shadow:0px 0px 15px #0003;
+	}
+	.topic-panel {
+		display: none;
+		opacity: 0;
+		transition: 0.8s ease opacity;
+		padding: 40px;
+	}
+	.topic-panel-active {
+		display: block;
+	}
+	.topic-panel-sections {
+		display: flex;
+		justify-content: space-between;
+	}
+	.topic-info-section {
+		flex-grow: 1;
+		text-align: left;
+		max-width: 60%;
+	}
+	.topic-img-section {
+		background-color: lightgray;
+		width: 300px;
+		margin-left: 50px;
+		height: 300px;
+	}
+	.topic-info-item {
+		padding-bottom: 15px;
+	}
+	.topic-info-item:last-child {
+		padding-bottom: 0px;
+	}
+	.topic-heading {
+		text-transform: uppercase;
+		text-decoration: underline;
+		font-size: 18px;
+		font-weight: 500;
+	}
+	.topic-info {
+		font-size: 15px;
+		line-height: 23px;
+	}
+	.topic-resource {
+		font-size: 13px;
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+
+
+	#other-container {
+		padding: 50px;
+	}
+	#other-links {
+		line-height: 35px;
+		text-transform: uppercase;
+	}
+	#footer {
+		padding: 20px;
+		background-color: var(--color-accent);
+		color: white;
+		text-transform: uppercase;
+	}
+
+
+
+	@media screen and (max-width: 400px) {
+		#content-header {
+			height: 60px;
+			padding: 16px 25px;
+		}
+		#header-date-container {
+			font-size: 13px;
+		}
+		#countdown-timer {
+			font-size: 10px;
+			line-height: 14px;
+		}
+		#title-container {
+			padding: 25px 0px;
+		}
+		#title-heading {
+			font-size: 16px;
+		}
+		#title {
+			font-size: 55px;
+		}
+		.verse, .verse-sub {
+			margin: 3px 14px;
+		}
+		#info-sections {
+			flex-direction: column;
+			margin: 50px 0px;
+		}
+		.info-section:first-child {
+			margin-bottom: 50px;
+		}
+		#topic-container {
+			padding: 50px 25px;
+		}
+		#topic-tabs {
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.topic-tab {
+			margin: 0px 0px;
+			max-width: 45%;
+		}
+		.topic-tab:nth-child(even) {
+			/* margin-left: 10px; */
+		}
+	}
+</style>
+
+<script type="text/javascript">
+	var topicLoading = false;
+
+	$(document).ready(function() {
+		setCountDownTimer();
+	});
+	
+	function setCountDownTimer() {
+		setTimer();
+		let timer = setInterval(function() {if (!setTimer()) clearInterval(timer)}, 60000);
+
+		function setTimer() {
+			let $timerElement = $("#countdown-timer");
+			let distance = (new Date("Oct 24, 2020 09:45:00").getTime()) - (new Date().getTime());
+			let timerData = {
+				days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+				hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+				minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+				// seconds: Math.floor((distance % (1000 * 60)) / 1000)
+			}
+			if (distance < 0) {
+				$timerElement.html("");
+				return false;
+			}
+			else {
+				$timerElement.html(timerData.days + " DAYS, " + timerData.hours + " HOURS, "+ timerData.minutes + " MINUTES");
+				return true;
+			}
+		}
+	}
+
+	function topicTabClick($tab) {
+		if (topicLoading) return;
+		topicLoading = true;
+		const topic = $tab.attr("topic");
+		const $panel = $(".topic-panel[topic=" + topic + "]");
+		const $container = $("#topic-content");
+		$container.css("height", $container.outerHeight());
+		$(".topic-tab").removeClass("topic-tab-active");
+		$(".topic-panel").removeClass("topic-panel-active");
+		$tab.addClass("topic-tab-active");
+		$panel.addClass("topic-panel-active");
+		
+		setTimeout(function() {
+			$container.css("height", $panel.outerHeight());
+			$(".topic-panel").css("opacity", "");
+			$panel.css("opacity", 1);
+
+			// $("body, html").stop().animate({
+			// 	'scrollTop': $("#topic-tabs").offset().top
+			// }, 1400,
+			// 'swing');
+		}, 10);
+
+		setTimeout(function() {
+			$container.css("height", "auto");
+			topicLoading = false;
+		}, 300);
+	}
+</script>
+</head>
+
+<body>
+	<div id="content-container">
+		<div id="content-header">
+			<div id="header-logo">
+				<a href="https://trygrace.org">
+					<img src="assets/grace-logo.svg" alt="Grace">
+				</a>
+			</div>
+			<div id="header-date-container">
+				<div class="header-date upper">October 24, 2020</div>
+				<div id="countdown-timer"></div>
+			</div>
+		</div>
+		<div id="content-body">
+			<div id="title-container">
+				<div class="title-heading upper">Grace Women</div>
+				<div id="title">Fall Conference</div>
+				<div class="verse">Put on the new self, created in the likeness of God.</div><br>
+				<div class="verse-sub">Ephesians 4:24</div>
+			</div>
+
+			<div style="background-color: white; height: 50px;"></div>
+
+			<div id="info-container">
+				<div id="info-sections">
+					<div class="info-section" style="text-align: justify;">You are invited to our Fall Virtual Women's Conference. Come connect and enjoy a time of rediscovering the image of God in your life. Gain insights and wisdom from key leadership at Grace that will Empower, Equip, Educate, Encourage, and Enable you to be the woman God created you to be.</div>
+					<div class="info-section">
+						<div class="content-heading">Schedule</div>
+						<div class="schedule-times">
+							<div>9:45 AM | Introduction</div>
+							<div>10:15 AM | Session #1</div>
+							<div>11:30 AM | Session #2</div>
+							<div>12:30 PM | Conclusion</div>
+						</div>
+					</div>
+				</div>
+				<div id="register">
+					<a href="javascript:void(0)" class="upper">Register Here</a>
+				</div>
+			</div>
+
+			<div id="topic-container">
+				<div class="content-heading">Topics</div>
+				<div style="margin: auto; max-width: 500px;">Participants will choose 2 of 4 topics to learn about during the conference.</div>
+				<div id="topic-tabs">
+					<div class="topic-tab button" topic="1" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">#METOO #CHURCHTOO</div>
+						<div>
+							<div class="arrow"></div>
+						</div>
+					</div>
+					<div class="topic-tab button" topic="2" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">Health and Wellness</div>
+						<div>
+							<div class="arrow"></div>
+						</div>
+					</div>
+					<div class="topic-tab button" topic="3" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">Racial Reconciliation</div>
+						<div>
+							<div class="arrow"></div>
+						</div>
+					</div>
+					<div class="topic-tab button" topic="4" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">Foundational Bible Class</div>
+						<div>
+							<div class="arrow"></div>
+						</div>
+					</div>
+				</div>
+				<div id="topic-content">
+					<div id="topic-content-inner">
+						<div class="topic-panel" topic="1">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">Topic Sub-Heading</div>
+									<div class="topic-info topic-info-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus sem, convallis accumsan pharetra at, commodo sed neque. Mauris bibendum, ligula sit amet auctor tincidunt, odio lectus ultricies mauris, sed egestas tortor nibh in velit. In nec nulla eget dui lacinia ullamcorper. Vivamus ac ipsum arcu. Fusce non malesuada ipsum. Fusce facilisis justo nec odio lacinia molestie. Phasellus et ex at lorem egestas lacinia. Etiam vel malesuada odio. Integer faucibus quis nunc ut porta. Cras efficitur ipsum augue, non pulvinar sem luctus a. Sed id ex id risus aliquam blandit. Vivamus ut est ultrices, volutpat est vel, ullamcorper dolor. Phasellus nec tincidunt felis, porta malesuada mauris. </div>
+									<div class="topic-info upper topic-info-item">Session Leader Laura Ingalls</div>
+									<div class="topic-resource topic-info-item">
+										<a href="javascript:void(0)">Resource Download</a>
+									</div>
+									<div class="topic-info upper topic-info-item">Contact Laura</div>
+								</div>
+								<div class="topic-img-section">
+
+								</div>
+							</div>
+						</div>
+						<div class="topic-panel" topic="2">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">Topic Sub-Heading</div>
+									<div class="topic-info topic-info-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus sem, convallis accumsan pharetra at, commodo sed neque. Mauris bibendum, ligula sit amet auctor tincidunt, odio lectus ultricies mauris, sed egestas tortor nibh in velit. In nec nulla eget dui lacinia ullamcorper. Vivamus ac ipsum arcu. Fusce non malesuada ipsum. Fusce facilisis justo nec odio lacinia molestie. Phasellus et ex at lorem egestas lacinia. Etiam vel malesuada odio. Integer faucibus quis nunc ut porta. Cras efficitur ipsum augue, non pulvinar sem luctus a. Sed id ex id risus aliquam blandit. Vivamus ut est ultrices, volutpat est vel, ullamcorper dolor.  sed egestas tortor nibh in velit. In nec nulla eget dui lacinia ullamcorper. Vivamus ac ipsum arcu. Fusce non malesuada ipsum. Fusce facilisis justo nec odio lacinia molestie. Phasellus et ex at lorem egestas lacinia. Etiam vel malesuada odio. Integer faucibus quis nunc ut porta. Cras efficitur ipsum augue, non pulvinar sem luctus a. Sed id ex id risus aliquam blandit. Vivamus ut est ultrices, volutpat est vel, ullamcorper dolor. Phasellus nec tinciPhasellus nec tincidunt felis, porta malesuada mauris. </div>
+									<div class="topic-info upper topic-info-item">Session Leader Laura Ingalls</div>
+									<div class="topic-resource topic-info-item">
+										<a href="javascript:void(0)">Resource Download</a>
+									</div>
+									<div class="topic-info upper topic-info-item">Contact Laura</div>
+								</div>
+								<div class="topic-img-section">
+
+								</div>
+							</div>
+						</div>
+						<div class="topic-panel" topic="3">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">Topic Sub-Heading</div>
+									<div class="topic-info topic-info-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus sem, convallis accumsan pharetra at, commodo sed neque. Mauris bibendum, ligula sit amet auctor tincidunt, odio lectus ultricies mauris, sed egestas tortor nibh in velit. In nec nulla eget dui lacinia ullamcorper. Vivamus ac ipsum arcu. Fusce non malesuada ipsum. Fusce facilisis justo nec odio lacinia molestie. Phasellus et ex at lorem egestas lacinia. Etiam vel malesuada odio. Integer faucibus quis nunc ut porta. Cras efficitur ipsum augue, non pulvinar sem luctus a. Sed id ex id risus aliquam blandit. Vivamus ut est ultrices, volutpat est vel, ullamcorper dolor.sed egestas tortor nibh in velit. In nec nulla eget dui lacinia ullamcorper. Vivamus ac ipsum arcu. Fusce non malesuada ipsum. Fusce facilisis justo nec odio lacinia molestie. Phasellus et ex at lorem egestas lacinia. Etiam vel malesuada odio. Integer faucibus quis nunc ut porta. Cras efficitur ipsum augue, non pulvinar sem luctus a. Sed id ex id risus aliquam blandit. Vivamus ut est ultrices, volutpat est vel, ullamcorper dolor. Phasellus nec tincised egestas tortor nibh in velit. In nec nulla eget dui lacinia ullamcorper. Vivamus ac ipsum arcu. Fusce non malesuada ipsum. Fusce facilisis justo nec odio lacinia molestie. Phasellus et ex at lorem egestas lacinia. Etiam vel malesuada odio. Integer faucibus quis nunc ut porta. Cras efficitur ipsum augue, non pulvinar sem luctus a. Sed id ex id risus aliquam blandit. Vivamus ut est ultrices, volutpat est vel, ullamcorper dolor. Phasellus nec tinci Phasellus nec tincidunt felis, porta malesuada mauris. </div>
+									<div class="topic-info upper topic-info-item">Session Leader Laura Ingalls</div>
+									<div class="topic-resource topic-info-item">
+										<a href="javascript:void(0)">Resource Download</a>
+									</div>
+									<div class="topic-info upper topic-info-item">Contact Laura</div>
+								</div>
+								<div class="topic-img-section">
+
+								</div>
+							</div>
+						</div>
+						<div class="topic-panel" topic="4">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">Topic Sub-Heading</div>
+									<div class="topic-info topic-info-item">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tellus sem, convallis accumsan pharetra at, commodo sed neque. Mauris bibendum, ligula sit amet auctor tincidunt, odio lectus ultricies mauris, sed egestas tortor nibh in velit. In nec nulla eget dui lacinia c tincidunt felis, porta malesuada mauris. </div>
+									<div class="topic-info upper topic-info-item">Session Leader Laura Ingalls</div>
+									<div class="topic-resource topic-info-item">
+										<a href="javascript:void(0)">Resource Download</a>
+									</div>
+									<div class="topic-info upper topic-info-item">Contact Laura</div>
+								</div>
+								<div class="topic-img-section">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="other-container">
+				<div class="content-heading">Other Ministries</div>
+				<div id="other-links">
+					<div><a href="javascript:void(0)">Divorce Care</a></div>
+					<div><a href="javascript:void(0)">Discipleship</a></div>
+					<div><a href="javascript:void(0)">Social</a></div>
+					<div><a href="javascript:void(0)">Service</a></div>
+				</div>
+			</div>
+
+			<div id="footer">
+				<div style="font-weight: 700;">Get Connected</div>
+				<div style="font-size: 12px; padding-top: 5px;"><a href="javascript:void(0)">Email Grace Women's Leaders</a></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
