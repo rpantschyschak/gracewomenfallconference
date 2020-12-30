@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Metadata -->
+<meta charset="utf-8">
+<meta name="author" content="Robert & Rebecca Pantschyschak">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="Grace, Grace Women, Fall Conference">
+<meta property="og:image" content="assets/GW_Fall Conference_Email Blast - No Logo.jpeg">
+<meta property="og:title" content="Grace Women Fall Conference">
+<meta property="og:description" content="In His Image: Redefining God's Image in You">
+<meta property="og:url" content="https://gracewomenfallconference.github.io/">
+<!-- Styles -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<title>Grace Women Fall Conference</title>
+
+<script type="text/javascript">
+	var topicLoading = false;
+	var eventDate = "October 24, 2020";
+	var eventTime = "09:45:00";
+	var eventEndTime = "12:30:00";
+
+	$(document).ready(function() {
+		$("#header-date").html(eventDate);
+		setCountDownTimer();
+	});
+	
+	// Update countdown timer element with time difference between now and specified date
+	function setCountDownTimer() {
+		setTimer();
+		let timer = setInterval(function() {if (!setTimer()) clearInterval(timer)}, 60000);
+
+		function setTimer() {
+			let $timerElement = $("#countdown-timer");
+			let distance = (new Date(`${eventDate} ${eventTime}`).getTime()) - (new Date().getTime());
+			let timerData = {
+				days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+				hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+				minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+				seconds: Math.floor((distance % (1000 * 60)) / 1000)
+			}
+			if (distance < 0) {
+				$timerElement.html("");
+				$timerElement.css("display", "none");
+				$("#header-date-container").addClass("countdown-expired");
+				if (eventOver()) { 
+					$("#feedback-container").css("display", "block");
+					$("#register").css("display", "none");
+					return false;
+				}
+			} else {
+				$timerElement.html(
+					(timerData.days == 0 ? "" : timerData.days == 1 ? "1 DAY, " : timerData.days + " DAYS, ") +
+					(timerData.hours == 1 ? "1 HOUR, " : timerData.hours + " HOURS, ") +
+					(timerData.minutes== 1 ? "1 MINUTE" : timerData.minutes + " MINUTES")
+				);
+			}
+			return true;
+		}
+	}
+
+	function eventOver() { 
+		return ((new Date(`${eventDate} ${eventEndTime}`).getTime()) - (new Date().getTime()) < 0 ? true : false); 
+	}
+
+	// Expand/collapse topic (seminar) panels when a button is clicked
+	function topicTabClick($tab) {
+		if (topicLoading) return;
+		topicLoading = true;
+		const topic = $tab.attr("topic");
+		const $panel = $(".topic-panel[topic=" + topic + "]");
+		const $container = $("#topic-content");
+		$container.css("height", $container.outerHeight());
+
+		if ($tab.hasClass("topic-tab-active")) {
+			setTimeout(function() {
+				$container.css("height", 0);
+				$(".topic-panel").css("opacity", "");
+				$(".topic-tab").removeClass("topic-tab-active");
+			}, 10);
+			setTimeout(function() {
+				$(".topic-panel").removeClass("topic-panel-active");
+			}, 250);
+		} else {
+			$(".topic-tab").removeClass("topic-tab-active");
+			$(".topic-panel").removeClass("topic-panel-active");
+			$tab.addClass("topic-tab-active");
+			$panel.addClass("topic-panel-active");
+			setTimeout(function() {
+				$container.css("height", $panel.outerHeight());
+				$(".topic-panel").css("opacity", "");
+				$panel.css("opacity", 1);
+			}, 10);
+		}
+		setTimeout(function() {
+			$container.css("height", "auto");
+			topicLoading = false;
+		}, 300);
+	}
+</script>
+
+<style>
+	/* --- Global Styles ------------------------------ */
+	@font-face {
+		font-family: 'Shoreline';
+		src: url('assets/Shorelines Script Bold.otf');
+	}
+	:root {
+		--color-accent:  #299aa2;
+		--color-accent2: #1c5d77;
+		--color-heading: rgb(84, 58, 21);
+		--color-text-light: #333;
+		--arrow-size: 10px;
+	}
+	* {
+		box-sizing: border-box;
+	}
+	body {
+		font-family: 'Montserrat', Arial, Helvetica, sans-serif;
+		margin: 0px;
+	}
+	img {
+		height: 100%;
+	}
+	video {
+		width: 100%;
+		height: 100%;
+	}
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.upper {
+		text-transform: uppercase;
+	}
+	.button {
+		cursor: pointer;
+		user-select: none;
+		border-radius: 4px;
+	}
+	#content-container {
+		width: 100%;
+		max-width: 1440px;
+		background-color: rgb(254,245,238);;
+		box-shadow: 0 0 20px 15px rgba(0,0,0,0.1);
+		margin: 0 auto;
+	}
+	#content-header {
+		padding: 26px 25px;
+		background-color: white;
+		display: flex;
+		justify-content: space-between;
+	}
+	#content-body {
+		text-align: center;
+	}
+	.content-heading {
+		font-size: 50px;
+		color: var(--color-heading);
+		margin-bottom: 20px;
+		display: inline-block;
+		line-height: normal;
+		font-family: 'Shoreline';
+	}
+	.content-heading:after, #register:after, #topic-container:after {
+		content: "";
+		display: block;
+		margin: 0 auto;
+		width: 75%;
+		margin-top: -30px;
+		border-bottom: 4px solid var(--color-heading);
+		opacity: 0.3;
+	}
+
+
+	/* --- Header ------------------------------ */
+	#header-logo {
+		height: 38px;
+	}
+	#header-date-container {
+		color: var(--color-text-light);
+		font-size: 17px;
+		font-weight: bold;
+		text-align: right;
+		display: flex;
+		flex-direction: column;
+	}
+	#countdown-timer {
+		font-size: 15px;
+		color: var(--color-text-light);
+		font-weight: normal;
+		line-height: 23px;
+	}
+	.countdown-expired {
+		flex-direction: row !important;
+		align-items: center !important;
+	}
+
+
+	/* --- Title ------------------------------ */
+	#title-container {
+		padding: 50px 0px;
+		background: url(assets/leaves-img.jpg);
+		background-color: var(--color-accent);
+		position: relative;
+		background-repeat: no-repeat;
+		background-position: center bottom;
+		background-size: cover;
+	}
+	.title-heading {
+		color: white;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	#title {
+		font-size: 100px;
+		color: white;
+		margin: 90px 0px;
+		font-family: 'Shoreline';
+		text-shadow: 3px 3px 5px var(--color-heading);
+	}
+	.verse, .verse-sub{
+		color: var(--color-text-light);
+		background-color: white;
+		font-size: 20px;
+		display: inline-block;
+		padding: 0px 11px;
+		margin: 5px;
+		box-shadow: 0px 0px 2px 2px white;
+		line-height: 19px;
+	}
+	.verse {
+		font-weight: bold;
+	}
+	.verse-sub {
+		font-size: 13px;
+		font-weight: 500;
+		line-height: 15px;
+	}
+	#title-separator {
+		background-color: white; 
+		height: 50px;
+	}
+
+
+	/* --- Feedback -------------------------- */
+	#feedback-container {
+		display: none;
+		margin: 50px auto 100px auto;
+		padding: 0px 20px;
+	}
+	.feedback-title {
+		font-size: 45px;
+		color: var(--color-accent);
+		font-weight: 500;
+		padding: 10px;
+		text-shadow: 0px 0px 1px rgba(0,0,0,0.1);
+	}
+	.feedback-link {
+		color: var(--color-text-light);
+		font-weight: 500;
+		font-size: 18px;
+		text-decoration: underline;
+		margin: auto;
+		max-width: 550px;
+	}
+
+
+	/* --- Info ------------------------------ */
+	#info-sections {
+		display: flex;
+		margin: 50px 50px;
+		justify-content: center;
+		align-items: center;
+	}
+	.info-section {
+		flex-grow: 1;
+		max-width: 355px;
+		margin: 0px 40px;
+		line-height: 28px;
+	}
+	#info-desc {
+		text-align: justify; 
+		padding-top: 40px;
+	}
+	.schedule-times {
+		text-transform: uppercase;
+		line-height: 35px;
+	}
+	.schedule-time {
+		text-align: right;
+	}
+	.schedule-name {
+		text-align: left;
+	}
+	.vert-separator {
+		color: var(--color-heading);
+		font-weight: bold;
+		opacity: 0.3;
+	}
+	#register {
+		font-size: 22px;
+		color: var(--color-accent);
+		display: inline-block;
+		font-weight: 500;
+		margin: 50px 0px;
+	}
+	#register:after {
+		border-color: var(--color-accent);
+		margin-top: 3px;
+	}
+	#video-container {
+		margin: auto;
+		padding: 20px 50px;
+	}
+	.info-video {
+		box-shadow: 0 0 20px 15px rgba(0,0,0,0.1);
+		border: 10px solid white;
+		border-bottom-width: 7px;
+	}
+
+
+	/* --- Seminars (Topics) ------------------------------ */
+	#topic-container {
+		padding: 50px 80px;
+	}
+	#topic-container:after {
+		width: 100%;
+		margin-top: 35px;
+	}
+	#topic-tabs {
+		display: flex;
+		align-items: stretch;
+		margin: 50px 0px 35px 0px;
+	}
+	.topic-tab {
+		flex-grow: 1;
+		text-align: center;
+		margin: 0px 20px;
+		position: relative;
+		background-color: var(--color-accent);
+		max-width: 25%;
+		padding: 14px 10px 5px 10px;
+		color: white;
+		transition: 0.4s ease all;
+		text-transform: uppercase;
+		font-size: 17px;
+		box-shadow: 0px 0px 15px transparent;
+		display: flex; 
+		flex-direction: column;
+		justify-content: space-evenly;
+	}
+	.topic-tab:first-child {
+		margin-left: 0px;
+	}
+	.topic-tab:last-child {
+		margin-right: 0px;
+		padding-top: 11px;
+	}
+	.arrow-container {
+		margin-top: -5px;
+	}
+	.arrow {
+		border: 2px solid white;
+		border-top: none;
+		border-left: none;
+		transform: rotate(45deg);
+		height: var(--arrow-size);
+		width: var(--arrow-size);
+		display: inline-block;
+		position: relative;
+		transition: 0.4s ease border-color, 0.25s ease transform;
+		top: -1px;
+		opacity: 1
+	}
+	.topic-tab-active .arrow{
+		border-color: var(--color-accent);
+		opacity: 0.6;
+		transform: rotate(225deg);
+		top: 0px;
+	}
+	.topic-tab-active {
+		background-color: white;
+		color: var(--color-accent);
+		box-shadow: 0px 0px 15px #00000052;
+	}
+	.topic-tab-active .topic-tab-arrow {
+		top: 100%;
+		border-top-color: var(--color-accent);
+	}
+	#topic-content {
+		height: 0px;
+		transition: 0.3s ease height;
+		overflow: hidden;
+		background-color: white;
+		box-shadow:0px 0px 15px #00000052;
+	}
+	.topic-panel {
+		display: none;
+		opacity: 0;
+		transition: 0.8s ease opacity;
+		padding: 40px;
+	}
+	.topic-panel-active {
+		display: block;
+	}
+	.topic-panel-sections {
+		display: flex;
+		justify-content: space-between;
+	}
+	.topic-info-section {
+		flex-grow: 1;
+		text-align: left;
+	}
+	.topic-info-item {
+		padding-bottom: 10px;
+	}
+	.topic-info-item:last-child {
+		padding-bottom: 0px;
+	}
+	.topic-heading {
+		text-transform: uppercase;
+		text-decoration: underline;
+		font-size: 18px;
+		font-weight: 500;
+		color: var(--color-text-light);
+	}
+	.topic-info {
+		font-size: 15px;
+		line-height: 23px;
+		position: relative;
+	}
+	.topic-info-desc {
+		padding-bottom: 30px;
+	}
+	.topic-leader-heading {
+		color: var(--color-heading);
+		font-weight: 700;
+	}
+	.topic-leader-names {
+		color: var(--color-text-light);
+	}
+	.topic-leader-bio-section {
+		margin-top: 15px;
+	}
+	.topic-leader:not(:last-child) {
+		margin-bottom: 30px;
+	}
+	.topic-leader:only-child .topic-leader-name {
+		display: none;
+	}
+	.topic-leader-name {
+		color: var(--color-heading);
+		margin-bottom: 10px;
+		font-weight: 500;
+		text-transform: uppercase;
+	}
+	.topic-leader-info {
+		display: flex;
+		justify-content: space-between;
+	}
+	.topic-leader-bio {
+		margin-left: 20px;
+		position: relative;
+		color: var(--color-text-light);
+		max-width: 900px;
+		padding: 8px 0px 8px 25px;
+	}
+	.topic-leader-bio:before {
+		content: "";
+		border-left: 2px solid var(--color-heading);
+		height: 100%;
+		width: 0px;
+		position: absolute;
+		left: 0px;
+		top: 0px;
+		opacity: 0.3;
+	}
+	.topic-leader-bio p {
+		margin: 0px 0px 10px 0px;
+	}
+	.topic-leader-bio p:last-child {
+		margin-bottom: 0px;
+	}
+	.topic-leader-bio-img-container {
+		margin-left: 20px;
+		display: flex;
+		align-items: center;
+	}
+	.topic-leader-bio-img {
+		width: 150px;
+		min-width: 150px;
+		height: auto;
+		box-shadow: 0px 0px 15px #00000052;
+	}
+	.topic-resources {
+		margin-top: 25px;
+		font-size: 15px;
+		font-weight: 500;
+	}
+	.resource-heading {
+		font-weight: 500;
+		color: var(--color-heading);
+	}
+	.resource-link {
+		color: var(--color-text-light);
+		text-decoration: underline;
+	}
+
+
+	/* --- Other Info ------------------------------ */
+	#other-container {
+		padding: 50px;
+		padding-top: 0px;
+	}
+	#other-links {
+		color: var(--color-text-light);
+		max-width: 360px;
+		margin: auto;
+	}
+	.other-item:not(:last-child) {
+		margin-bottom: 30px;
+	}
+	.other-heading {
+		font-size: 16px;
+		font-weight: 500;
+		margin-bottom: 3px;
+		color: var(--color-heading);
+	}
+	.other-text {
+		font-size: 14px;
+	}
+
+
+	/* --- Footer ------------------------------ */
+	#footer {
+		padding: 30px;
+		background-color: var(--color-accent);
+		color: white;
+		text-transform: uppercase;
+	}
+
+
+	/* --- Media Queries ------------------------------ */
+	@media screen and (max-width: 600px) {
+		#content-header {
+			height: 65px;
+			padding: 16px 25px;
+		}
+		#header-logo {
+			height: 33px;
+		}
+		#header-date-container {
+			font-size: 15px;
+		}
+		#countdown-timer {
+			font-size: 10px;
+			line-height: 14px;
+		}
+		#title-container {
+			padding: 25px 0px;
+		}
+		#title-heading {
+			font-size: 16px;
+		}
+		#title {
+			font-size: 55px;
+			line-height: 80px;
+		}
+		.verse, .verse-sub {
+			margin: 3px 14px;
+		}
+		.verse {
+			font-size: 17px;
+		}
+		#title-separator {
+			height: 0px;
+		}
+		#feedback-container {
+			margin-bottom: 70px;
+		}
+		.feedback-title {
+			font-size: 25px;
+		}
+		.feedback-link {
+			font-size: 15px;
+			max-width: 288px;
+		}
+		.content-heading {
+			font-size: 40px;
+			line-height: 45px;
+		}
+		.content-heading:after {
+			margin-top: 0px;
+		}
+		#info-sections {
+			flex-direction: column;
+			margin: 50px 0px;
+		}
+		#info-desc {
+			padding-top: 0px;
+			margin-bottom: 50px;
+			margin: 0px 25px 75px 25px;
+		}
+		#video-container {
+			padding: 20px 20px;
+		}
+		.info-video {
+			border-width: 5px;
+			border-bottom-width: 2px;
+		}
+		#topic-container {
+			padding: 50px 25px;
+		}
+		#topic-tabs {
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+		.topic-tab {
+			margin: 0px 0px;
+			max-width: 48%;
+			margin-bottom: 10px;
+			font-size: 12px;
+			padding-top: 10px;
+		}
+		.topic-tab:nth-child(even) {
+			margin-left: 10px;
+		}
+		#register {
+			margin: 20px 0px;
+		}
+		.arrow-container {
+			margin-top: 0px;
+		}
+		.topic-panel {
+			padding: 25px;
+		}
+		.topic-panel-sections {
+			flex-direction: column;
+			align-items: center;
+		}
+		.topic-info-section {
+			max-width: 100%;
+			margin-bottom: 40px;
+		}
+		.topic-info-item {
+			text-align: center;
+		}
+		.topic-info-desc {
+			text-align: justify;
+		}
+		.topic-leader:not(:last-child) {
+			margin-bottom: 60px;
+		}
+		.topic-leader-info {
+			flex-direction: column;
+		}
+		.topic-leader-bio {
+			padding-left: 0px;
+			margin-left: 0px;
+			text-align: justify;
+			margin-bottom: 30px;
+		}
+		.topic-leader-bio:before {
+			border: none;
+		}
+		.topic-leader-bio-img-container {
+			margin-left: 0px;
+			display: inline-block;
+		}
+		.topic-resources .vert-separator {
+			display: none;
+		}
+		.resource-link {
+			display: block;
+			margin-top: 5px;
+		}
+	}
+</style>
+</head>
+
+<body>
+	<div id="content-container">
+
+		<!-- Header -->
+		<div id="content-header">
+			<div id="header-logo">
+				<a href="https://trygrace.org">
+					<img src="assets/grace-logo.svg" alt="Grace">
+				</a>
+			</div>
+			<div id="header-date-container">
+				<div id="header-date" class="upper"></div>
+				<div id="countdown-timer"></div>
+			</div>
+		</div>
+
+		<div id="content-body">
+
+			<!-- Title -->
+			<div id="title-container">
+				<div class="title-heading upper">Grace Women</div>
+				<div id="title">Fall Conference</div>
+				<div class="verse">In His Image: Redefining God's Image in You</div><br>
+				<div class="verse-sub">Ephesians 4:24</div>
+			</div>
+			<div id="title-separator"></div>
+
+			<!-- Feedback -->
+			<div id="feedback-container">
+				<div class="feedback-title">Thank you for attending the conference!</div>
+				<div class="feedback-link"><a href="https://forms.gle/v9P7Cn6PSSVEKJkH9" target="_blank" rel="noopener noreferrer">Click here to provide feedback or sign up to receive information about future events</a></div>
+			</div>
+
+			<!-- Info -->
+			<div id="info-container">
+				<div id="info-sections">
+					<div id="info-desc" class="info-section">
+						You are invited to our Fall Virtual Women's Conference. Come connect and enjoy a time of rediscovering the image of God in your life. Gain insights and wisdom from key leadership at Grace that will Engage, Equip, Educate, Encourage, and Empower you to be the woman God created you to be.</div>
+					<div class="info-section">
+						<div class="content-heading">Schedule</div>
+						<div class="schedule-times">
+							<table style="margin: auto;">
+								<tr>
+									<td class="schedule-time">9:45 AM</td>
+									<td><span class="vert-separator">|</span></td>
+									<td class="schedule-name">Introduction</td>
+								</tr>
+								<tr>
+									<td class="schedule-time">10:15 AM</td>
+									<td><span class="vert-separator">|</span></td>
+									<td class="schedule-name">Session #1</td>
+								</tr>
+								<tr>
+									<td class="schedule-time">11:30 AM</td>
+									<td><span class="vert-separator">|</span></td>
+									<td class="schedule-name">Session #2</td>
+								</tr>
+								<tr>
+									<td class="schedule-time">12:30 PM</td>
+									<td><span class="vert-separator">|</span></td>
+									<td class="schedule-name">Conclusion</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div id="register">
+					<a href="https://events.r20.constantcontact.com/register/eventReg?oeidk=a07eh8oyyll8c5a1560&oseq=&c=&ch=" class="upper" target="_blank" rel="noopener noreferrer">Register Here</a>
+				</div>
+				<div id="video-container">
+					<div class="info-video">
+						<video controls>
+							<source src="assets/videos/Womens Fall Conference - Anna.mp4" type="video/mp4">
+							Womens Fall Conference - Anna
+						</video>
+					</div>
+				</div>
+			</div>
+
+			<!-- Seminars (Topics) -->
+			<div id="topic-container">
+				<div class="content-heading">Seminars</div>
+				<div style="margin: auto; max-width: 464px;">Participants will choose 2 of 4 seminars to learn about during the conference.</div>
+				<div style="margin: 15px auto; font-weight: 500; text-decoration: underline;"><a href="assets/Grace Fall Forum Workbook.pdf" target="_blank" rel="noopener noreferrer">Download the workbook for the seminars here</a></div>
+				<div id="topic-tabs">
+					<div class="topic-tab button" topic="1" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">Connect-Learn-Grow</div>
+						<div class="arrow-container">
+							<div class="arrow"></div>
+						</div>
+					</div>
+					<div class="topic-tab button" topic="2" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">Health and Wellness</div>
+						<div class="arrow-container">
+							<div class="arrow"></div>
+						</div>
+					</div>
+					<div class="topic-tab button" topic="3" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">#metoo #churchtoo</div>
+						<div class="arrow-container">
+							<div class="arrow"></div>
+						</div>
+					</div>
+					<div class="topic-tab button" topic="4" onclick="topicTabClick($(this));">
+						<div class="topic-tab-label">Reading Scripture <br> as Image Bearers</div>
+						<div class="arrow-container">
+							<div class="arrow"></div>
+						</div>
+					</div>
+				</div>
+				<div id="topic-content">
+					<div id="topic-content-inner">
+						<div class="topic-panel" topic="1">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">A Seminar on Racial Reconciliation</div>
+									<div class="topic-info topic-info-item topic-info-desc">
+										<p>In the Old Testament, righteousness refers to something fixed and the way it should be … a norm, a standard, by which other things can be measured.  In this context it means conforming to how God says it should be.  Justice in many ways puts the standard of righteousness in practice by making things right, fixing a problem, intervening where things have gone wrong, confronting and correcting those who are in the wrong and delivering those suffering the injustice.</p>
+										<p>Connect – Learn – Grow is a phrased approach to full reconciliation to Christ.  To connect, learn, and grow, opens us up to taking first steps to address personal prejudices, biases, and racism in the church and the nation through biblical teaching, education, and application. As professed believers and followers of Jesus Christ, it is our duty to do take a stand for justice, for all.
+										</p>
+									</div>
+									<div class="topic-info topic-info-item">
+										<span class="topic-leader-heading upper">Seminar Leader </span><span class="vert-separator">|</span><span class="topic-leader-names"> Julie Coy, Director of Racial Reconciliation, Grace Community Church</span>
+										<div class="topic-leader-bio-section">
+											<div class="topic-leader">
+												<div class="topic-leader-info">
+													<div class="topic-leader-bio">
+														<div class="topic-leader-name">Julie Coy</div>
+														<p>Julie Coy is a seminarian and holds dual graduate degrees in religious education and theological studies. She also has a bachelor’s degree in business administration.  Julie has been called by GOD to minister to the needs of couples and women; as speaker, teacher, and servant.  Her teaching specialties include Scripture, prayer, spiritual disciplines, and life application for Christian living.  Julie grew up in the small community of Yorktown, Virginia, where church attendance was the center of all activity.  She is an avid reader, enjoys writing, travelling, and continues to find refreshment in prayer, meditation, reflection, and Bible study.  She currently resides in Fort Belvoir, Virginia, with her husband, Steve.</p>
+													</div>
+													<div class="topic-leader-bio-img-container"><img class="topic-leader-bio-img" src="assets/headshots/Julie Coy.png"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="topic-panel" topic="2">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">Understanding How to Apply "Our Bodies Are a Temple" to Our Daily Lives</div>
+									<div class="topic-info topic-info-item topic-info-desc">
+										<p>1 Corinthians 6:19-20 states that our bodies are a temple. We are made in the image of God and in this seminar, we will walk you through the spiritual, mental and physical aspects of health. We will also dispel some of the common misconceptions about how to take care of yourself so that you can live your life filled with His peace and inner strength. </p>
+									</div>
+									<div class="topic-info topic-info-item">
+										<span class="topic-leader-heading upper">Seminar Leaders </span><span class="vert-separator">|</span><span class="topic-leader-names"> Devon Rodriguez, Ebony Williams, and Elise Wireman </span>
+										<div class="topic-leader-bio-section">
+											<div class="topic-leader">
+												<div class="topic-leader-info">
+													<div class="topic-leader-bio">
+														<div class="topic-leader-name">Devon Rodriguez</div>
+														<p>Devon holds a M.S in Exercise Science from Liberty University, a B.A. in Psychology from SUNY Buffalo where she got a Division 1 Softball scholarship.  She has been an ACE Certified Personal Trainer for the past 5 years and is currently working as a Health and Fitness Specialist in the Senate Office Building in Washington DC. She has worked in many settings from private clubs to commercial gyms to a cruise ship. She has worked with clients of all ages, backgrounds, fitness levels and has a passion for helping those with special needs. She has worked as a teacher’s aide for children with special needs, worked with adaptive physical education classes and with a community day program for adults with special needs.</p>
+														<p>Devon believes in the holistic aspect of health and wellness. Fitness, nutrition, mental attitude and spiritual are all necessary to promote healthy, lifelong changes and reach fitness goals. With the right knowledge, tools and support she believes you can achieve these goals and live the best quality of life. She works to help push her clients past their comfort zone to achieve the desired positive changes in their lives. Her lifestyle reflects that excitement, passion and knowledge to Engage, Encourage, Educate, Equip and Empower everyone she works with.</p>
+													</div>
+													<div class="topic-leader-bio-img-container"><img class="topic-leader-bio-img" src="assets/headshots/Devon Rodriguez_sized for web.jpeg"></div>
+												</div>
+											</div>
+											<div class="topic-leader">
+												<div class="topic-leader-info">
+													<div class="topic-leader-bio">
+														<div class="topic-leader-name">Ebony Williams</div>
+														<p>Ebony Williams is a thyroid disease coach, personal trainer, and food educator. She helps women struggling with constant fatigue due to thyroid and hormone imbalances gain more energy and live a healthier life without extreme diets or intense fitness programs through food, fitness and fun.</p>
+														<p>Ebony believes that it is essential to take a full body approach to wellness and also thinks that it is important to consider the individual when helping someone reach their health and wellness goals. She encourages patient advocacy and seeks to find ways to improve the lives of others through education.</p>
+														<p>She currently works as a supervisor in IT at Johns Hopkins Health System and has more than 10 years experience working in the healthcare industry and understands how to help her clients navigate through the healthcare space.</p>
+													</div>
+													<div class="topic-leader-bio-img-container"><img class="topic-leader-bio-img" src="assets/headshots/Ebony Williams_sized for web.jpg"></div>
+												</div>
+											</div>
+											<div class="topic-leader">
+												<div class="topic-leader-info">
+													<div class="topic-leader-bio">
+														<div class="topic-leader-name">Elise Wireman</div>
+														<p>Hi everyone! My name is Elise Wireman; I'm a Special Investigator by day and a fitness enthusiast by night! I've been attending Grace Community Church regularly for the past 6 years; you may have seen me on the worship team or working with the young professionals group. I'm 31 years old and got married April of last year to my wonderful husband Matt. I've been passionate about exercise and challenging my body physically since college and am a former athlete (track and field). </p>
+														<p>I'm very excited for what the Women's Ministry is doing regarding fitness because it's such an important part of a well-rounded, healthy lifestyle! My favorite part of fitness is making my body "put in work". I love challenging myself in activities such as hiking, calisthenics (body weight exercises) and strength training. And I very much enjoy teaching and helping others; so much so, that I'm currently studying to be a personal trainer! I am fascinated at how fearfully and wonderfully made our bodies are; I'm in awe of God's perfect design. I look forward to all of the upcoming events in fitness and can't wait to work with you and help you worship through fitness!</p>
+													</div>
+													<div class="topic-leader-bio-img-container"><img class="topic-leader-bio-img" src="assets/headshots/Elise Wireman_edited for web.jpg"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="topic-panel" topic="3">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">Encouragement for Survivors and Friends in the #metoo and #churchtoo Movement</div>
+									<div class="topic-info topic-info-item topic-info-desc">
+										<p>What does it mean to be made “In His Image”? The statistics tell us that one woman is sexually assaulted every 45 seconds, that 1 in 3 women have been victim to sexual, dating, and/or domestic violence. So how can we encourage each other to find hope in God’s truth for us? As survivors, we struggle with overcoming the burden of that identity label. As a church, we struggle with providing the needed support and friendship for victims. In this seminar we will learn about how God’s truth and scripture is the core foundation for us re-discovering our identity in Him, and how to respond when someone shares their story with you. </p>
+									</div>
+									<div class="topic-info topic-info-item">
+										<span class="topic-leader-heading upper">Seminar Leader </span><span class="vert-separator">|</span><span class="topic-leader-names"> Paulina Sosa, BA, MPH</span>
+										<div class="topic-leader-bio-section">
+											<div class="topic-leader">
+												<div class="topic-leader-info">
+													<div class="topic-leader-bio">
+														<div class="topic-leader-name">Paulina Sosa</div>
+														<p>Paulina Sosa is a survivor and an advocate. From her personal experience and healing process, she has seen the power of God’s healing hand in her journey and is now impassioned to share that truth to empower women. From Sexual Violence Awareness Month, Dating Violence Awareness Month, and now Domestic Violence Awareness Month, she has joined various advocacy and awareness initiatives.</p>
+														<p>Paulina is also the founder of Latinx Voces en Salud, a storytelling initiative for Latinx communities and has recently partnered with the Women’s Caucus to host a storytelling project for Survivors: “Breaking the Silence.” Now, her passion for Christ is the foundation of her work in women’s empowerment. One of her favorite scriptures is, “She is clothed with dignity and strength…” (Proverbs 31:25).</p>
+													</div>
+													<div class="topic-leader-bio-img-container"><img class="topic-leader-bio-img" src="assets/headshots/Paulina_sized for web.png"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="topic-panel" topic="4">
+							<div class="topic-panel-sections">
+								<div class="topic-info-section">
+									<div class="topic-heading topic-info-item">A Foundational Bible Seminar</div>
+									<div class="topic-info topic-info-item topic-info-desc">
+										<p>Our knowledge, understanding, and application of Scripture is a necessary and crucial part of our Christian walks. However, the Bible can seem overwhelming and confusing, and we can get caught in the trap of misinterpretation and misapplication. In this session, you'll discover what it really means to be made in the image of God and learn how to approach Scripture in light of the truth that we are His image bearers. </p>
+									</div>
+									<div class="topic-info topic-info-item">
+										<span class="topic-leader-heading upper">Seminar Leader </span><span class="vert-separator">|</span><span class="topic-leader-names"> Cait Brown</span>
+										<div class="topic-leader-bio-section">
+											<div class="topic-leader">
+												<div class="topic-leader-info">
+													<div class="topic-leader-bio">
+														<div class="topic-leader-name">Cait Brown</div>
+														<p>I grew up between Philadelphia and Washington, D.C. and graduated from the University of Maryland where I studied in Biology, Anthropology, and French. I’m in a relationship and am a digital marketing manager for a technology company in Northern Virginia.</p>
+														<p>For the first 25 years of my life, I identified as an atheist and would often use my educational background in science to (harshly) support my views and criticize Christians and their beliefs. In 2018, after many years of struggling with mental illness, I came to a much healthier place, but still experienced this unrelenting feeling that my life was incomplete and empty, and something huge was missing; I just couldn't figure out what it was. "Out of the blue," I decided to attend a church to see if I could find any hope or answers. The first time I went to Grace, I sat in the very last seat of the very last row so that I could exit quickly because I just knew I would hate the service. Instead, I cried through that entire service as it perfectly spoke to a personal struggle I was in the midst of tackling. I have returned every week since (and now sit in the front row!). On October 28, 2018, three months after coming to Grace, by the grace of God I accepted Christ as my Savior after the Lord opened my eyes to His truth and gave me a new heart.</p>
+														<p>My passion has become seeking and knowing God through the study of His Word, and at the end of last year I felt called to create a community for the purpose of seeing women come to know and love the Lord and His Son Jesus Christ. That community developed through Instagram, at @groundedingrace_, where I share Biblical encouragement, short devotionals, advice for reading the Word, and answer questions from people in all stages of their faith walk.</p>
+													</div>
+													<div class="topic-leader-bio-img-container"><img class="topic-leader-bio-img" src="assets/headshots/Caitlyne Brown_sized for web.jpeg"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Other Info -->
+			<div id="other-container">
+				<div class="content-heading">Other Ministries</div>
+				<div id="other-links">
+					<div class="other-item">
+						<div class="other-heading upper">Bible Study</div>
+						<div class="other-text">Sign ups January 3rd - 10th, launching January 19th</div>
+					</div>
+					<div class="other-item">
+						<div class="other-heading upper">Mentorship Program</div>
+						<div class="other-text">Launching January 2021</div>
+					</div>
+					<div class="other-item">
+						<div class="other-heading upper">Living Forward</div>
+						<div class="other-text">A series of discussions around separation and divorce, coming in 2021</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Footer -->
+			<div id="footer">
+				<div style="font-weight: 700;">Get Connected</div>
+				<div style="font-size: 12px; padding-top: 5px;"><a href="https://trygrace.org/women/" target="_blank" rel="noopener noreferrer">Contact Grace Women</a></div>
+			</div>
+			
+		</div>
+	</div>
+</body>
+</html>
